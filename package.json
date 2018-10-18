@@ -1,0 +1,9 @@
+{
+    "name": "g-cams",
+    "version": "1.0.0",
+    "dependencies": {
+        "socket.io": "*",
+        "express": "*",
+        "log": "*"
+    }
+}
