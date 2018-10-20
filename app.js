@@ -1,7 +1,9 @@
-var express = require("express");
-var app = new express();
-var http = require("http").Server(app);
-var io = require('socket.io')(http);
+var express = require('express');
+var http = require('http');
+
+var app = express();
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 
 var Log = require('log');
     log = new Log('debug');
@@ -15,9 +17,13 @@ app.get('/', function(req, res){
 });
 io.on('connection', function(socket){
     socket.on('stream', function(image){
+        console.log('emiting broad cast');
         socket.broadcast.emit('stream', image);
     });
 });
-http.listen(port, function(req, res){
+app.use(function(err, req, resp, next){
+    console.log(err);
+});
+server.listen(port, function(req, res){
     log.info('Server Listening on port %s', port);
 });
